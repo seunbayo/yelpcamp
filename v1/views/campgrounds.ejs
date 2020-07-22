@@ -1,0 +1,14 @@
+<!-- To include header.ejs -->
+<%- include ("partials/header") %>
+
+<h1>This is the camp page</h1>
+
+<% campgrounds.forEach(function(campgrounds){ %>
+    <div>
+        <h4><%= campgrounds.name %></h4>
+        <img src="<%= campgrounds.image%>">
+    </div>
+<% }); %>
+
+<!-- To include footer.ejs -->
+<%- include ("partials/footer") %>
