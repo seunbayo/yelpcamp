@@ -1,14 +1,42 @@
 <!-- To include header.ejs -->
 <%- include ("partials/header") %>
+<div class="container">
+    <header class="jumotron">
+        <div class="container">
+            <h1>Welcome to yelpcamp</h1>
+            <p>
+                view our hand-picked campgrounds from all over the world
+            </p>
+            <p>
+                <a class="btn btn-primary           btn-large"    href="/campgrounds/new">
+                    Add a new campground
+                </a>
+            </p>
+        </div>  
+    </header>
 
-<h1>This is the camp page</h1>
-
-<% campgrounds.forEach(function(campgrounds){ %>
-    <div>
-        <h4><%= campgrounds.name %></h4>
-        <img src="<%= campgrounds.image%>">
+    <div class="row">
+        <% campgrounds.forEach(function(campgrounds){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= campgrounds.image%>">
+                    <div class="caption">
+                        <h4>
+                            <%= campgrounds.name %>
+                        </h4>
+                    </div>
+                </div>
+                
+               
+            </div>
+        <% }); %>
     </div>
-<% }); %>
+      
+    
+    
+    
+</div>
 
-<!-- To include footer.ejs -->
-<%- include ("partials/footer") %>
+   <!-- To include footer.ejs -->
+   <%- include ("partials/footer") %>
+
