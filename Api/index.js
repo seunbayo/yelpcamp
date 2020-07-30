@@ -7,7 +7,9 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
   let onSuccess = (_response, body) => {
-    res.render('index', { result: body });
+    let result = JSON.parse(body);
+    console.log(result);
+    res.render('index', { result });
   }
   let onError = error => res.send(error)
   pokemon.all(onSuccess, onError)

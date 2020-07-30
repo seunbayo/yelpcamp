@@ -1,5 +1,7 @@
 <%- include('layout-header') %>
 <pre>
-<%= result %>
+<% result.results.forEach(pokemon => { %>
+<%= pokemon.name %>
+<% }) %>
 </pre>
 <%- include('layout-footer') %>
