@@ -1,7 +1,10 @@
 <%- include('layout-header') %>
-<pre>
+<h1>List of Pokemon</h1>
+<table>
 <% result.results.forEach(pokemon => { %>
-<%= pokemon.name %>
+  <tr>
+    <td><%= pokemon.name %></td>
+  <tr>
 <% }) %>
-</pre>
+</table>
 <%- include('layout-footer') %>
