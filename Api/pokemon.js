@@ -6,7 +6,8 @@ function all(successHandler, errorHandler) {
       errorHandler(error);
     } else {
       if (response.statusCode == 200) {
-        successHandler(response, body);
+        let data = JSON.parse(body);
+        successHandler(response, data);
       }
     }
   });
@@ -15,7 +16,10 @@ function all(successHandler, errorHandler) {
 exports.all = all;
 
 if (require.main === module) {
-  let onSuccess = (_response, body) => console.log(body);
+  let onSuccess = (_response, data) => {
+    let output = JSON.stringify(data, null, 2);
+    console.log(output);
+  };
   let onError = error => {
     console.error('Something went wrong');
     console.error(error);
