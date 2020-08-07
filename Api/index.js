@@ -14,7 +14,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:pokemon_name', (req, res) => {
-  res.render('show', {pokemon_name: req.params.pokemon_name});
+  let onSuccess = (_response, data) => {
+    res.render('show', { data });
+  }
+  let onError = error => res.send(error)
+  pokemon.find(req.params.pokemon_name, onSuccess, onError)
 });
 
 app.listen(3000, () => {
