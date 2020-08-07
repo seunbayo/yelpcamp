@@ -13,5 +13,5 @@ app.get('/', (req, res) => {
   pokemon.all(onSuccess, onError)
 });
 
-app.listen(port, () => {
+app.listen(3000, () => {
   console.log(`Example app listening at http://localhost:${port}`)});

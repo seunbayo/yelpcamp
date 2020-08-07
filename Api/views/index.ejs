@@ -1,9 +1,13 @@
 <%- include('layout-header') %>
 <h1>List of Pokemon</h1>
 <table>
-<% data.results.forEach(pokemon => { %>
+<%   data.results.forEach(pokemon => { %>
   <tr>
-    <td><%= pokemon.name %></td>
+    <td>
+      <a href="/<%= pokemon.name %>">
+        <%= pokemon.name %>
+      </a> 
+    </td>
   <tr>
 <% }) %>
 </table>

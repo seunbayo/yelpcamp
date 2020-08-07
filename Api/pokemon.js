@@ -13,6 +13,11 @@ function all(successHandler, errorHandler) {
   });
 }
 
+function find(id) {
+  request
+}
+
+
 exports.all = all;
 
 if (require.main === module) {
