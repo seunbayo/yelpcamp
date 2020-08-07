@@ -13,5 +13,9 @@ app.get('/', (req, res) => {
   pokemon.all(onSuccess, onError)
 });
 
+app.get('/:pokemon_name', (req, res) => {
+  res.render('show', {pokemon_name: req.params.pokemon_name});
+});
+
 app.listen(3000, () => {
   console.log(`Example app listening at http://localhost:${port}`)});
