@@ -13,12 +13,21 @@ function all(successHandler, errorHandler) {
   });
 }
 
-function find(id) {
-  request
+function find(pokemon_name, successHandler, errorHandler) {
+  request('https://pokeapi.co/api/v2/pokemon/' + pokemon_name, function(error, response, body){
+    if(error){
+      errorHandler(error);
+    } else {
+      if (response.statusCode == 200) {
+        let data = JSON.parse(body);
+        successHandler(response, data);
+      }
+    }
+  });
 }
 
-
 exports.all = all;
+exports.find = find;
 
 if (require.main === module) {
   let onSuccess = (_response, data) => {
@@ -29,5 +38,7 @@ if (require.main === module) {
     console.error('Something went wrong');
     console.error(error);
   }
-  all(onSuccess, onError);
+  // all(onSuccess, onError);
+  find('bulbasaur', onSuccess, onError)
 }
+
