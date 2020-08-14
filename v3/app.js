@@ -4,8 +4,13 @@ var app = express();
 var bodyParser = require("body-parser"); 
     // adding mongoose
 var mongoose = require("mongoose");
-var Schema = mongoose.Schema
+// var Schema = mongoose.Schema
+var Campground = require("./models/campground"),
+    seedDB     = require("./seeds")
+    /* comment    = require("./models/comment"),
+    User       = require("./model/User"); */
 
+seedDB();
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs")
 
@@ -14,56 +19,52 @@ mongoose.connect("mongodb://localhost/yelp_camp",{
   useUnifiedTopology: true
 });
 
-//setting up schema
-var campgroundSchema = new mongoose.Schema({
-    name:String,
-    image: String
-});
 
-var Campground = mongoose.model("Campground", campgroundSchema);
 
-Campground.create(
-    {
-        name: "Solomon creek",
-        image: "https://images.pexels.com/photos/1230302/pexels-photo-1230302.jpeg?auto=compress&cs=tinysrgb&h=350"
-    }, function(err, campground){
-        if(err){
-            console.log(err);
-        } else{
-            console.log('newly created campground: ');
-            console.log(campground);
-        }
-    });
-
-var campgrounds = [
-    {name: "Solomon greek", image: "https://images.pexels.com/photos/1230302/pexels-photo-1230302.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Abuja Connect", image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Abuja Connect", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Abuja Connect", image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Abuja Connect", image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Abuja Connect", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Abuja Connect", image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&h=350"},
+// var campgrounds = [
+//     {name: "Solomon greek", image: "https://images.pexels.com/photos/1230302/pexels-photo-1230302.jpeg?auto=compress&cs=tinysrgb&h=350"},
+//     {name: "Abuja Connect", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
+//     {name: "Abuja Connect", image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&h=350"},
+//     {name: "Abuja Connect", image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&h=350"},
+//     {name: "Abuja Connect", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&h=350"},
     
-    
-]
+// ]
+
+
 app.get("/", function(req, res){
     res.render("landing");
 });
 
+//INDEX - show all campgrounds
+// app.get("/campgrounds", function(req, res){
+//     res.render("campgrounds",{campgrounds:campgrounds});
+// });
 
 app.get("/campgrounds", function(req, res){
-    res.render("campgrounds",{campgrounds:campgrounds});
-});
-    
+    //get all campground from DB
+    Campground.find({}, function(err, allCampgrounds){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("index", {campgrounds:allCampgrounds});
+        }
+    });
+})
 
 app.post("/campgrounds", function(req, res){
     // get data from form and add to array
     var name = req.body.name;
     var image = req.body.image;
-    var newCampground = {name: name, image:image}
-    campgrounds.push(newCampground); 
-    // redirect back to campground page
-    res.redirect("/campgrounds");
+    var newCampground = {name: name, image:image, description: desc}
+    //create a new campground and save to DB
+    Campground.create(newCampground, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+            //redirect back to campground page
+            res.redirect("/campgrounds")
+        }
+    });
 });
 
 app.get("/campgrounds/new", function(req, res){
