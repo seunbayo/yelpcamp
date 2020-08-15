@@ -75,6 +75,14 @@ app.get("/campgrounds/:id", function (req, res) {
     }); 
 });
 
+//======================
+//COMMENTS ROUTE
+//======================
+
+app.get("/campgrounds/:id/comments/new", function(req, res){
+  res.send("new");
+});
+
 app.listen(4000, function () {
   console.log("Yelp camp server");
 });
