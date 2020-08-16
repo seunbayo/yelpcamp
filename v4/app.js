@@ -5,9 +5,9 @@ var bodyParser = require("body-parser");
 // adding mongoose
 var mongoose = require("mongoose");
 // var Schema = mongoose.Schema
-var Campground = require("./models/campground"),
-  seedDB = require("./seeds"),
-  comment = require("./models/comment");
+var Campground = require("./models/campground");
+var  seedDB = require("./seeds");
+var  Comment = require("./models/comment");
 
 seedDB();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -87,9 +87,32 @@ app.get("/campgrounds/:id/comments/new", function(req, res){
     } else {
       res.render("comments/new", {campground: campground});
     }
-  })
-  res.render("comments/new");
+  });
 });
+
+app.post("/campgrounds/:id/comments", function(req, res){
+  //Lookup campround using ID
+  Campground.findById(req.params.id, function(err, campground){
+    if(err){
+      console.log(err);
+      res.redirect("/campgrounds");
+    } else {
+       //CREATE NEW COMMENT
+      Comment.create(req.body.comment, function(err, comment){
+        if (err){
+          console.log('');
+        } else {
+          campground.comments.push(comment);
+          campground.save();
+          //REDIRECT TO SHOW PAGE
+          res.redirect('/campgrounds/' + campground._id)
+        }
+      })
+      
+    }
+  })
+})
+
 
 app.listen(4000, function () {
   console.log("Yelp camp server");
