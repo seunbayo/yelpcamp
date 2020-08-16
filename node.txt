@@ -1,0 +1,17 @@
+Ignore node modules after adding
+
+1. Rename node_modules to something else e.g backup_node_modules
+2. Run git rm -r node_modules 
+3. Add node_modules to .gitignore
+4. Run git add .gitignore
+5. Commit 
+6. Rename node_modules back e.g backup_node_modules to node_modules
+
+
+
+#first move al html and js files to public
+#create the express project with packagejson and index.js
+#then bootstrap as normal index.js
+#create route for the highscores packagejson
+#add to the js (query params ) to the high score package
+#yes

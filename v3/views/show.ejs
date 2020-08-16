@@ -1,1 +1,18 @@
-<h1>Show template</h1>
+<!-- To include header.ejs -->
+<%- include ("partials/header") %>
+
+<h1> <%=campground.name%> </h1>
+
+<img src=" <%= campground.image %> " >
+
+<p> <%= campground.description %> </p>
+
+<% campground.comments.forEach(function(comment){ %>
+    <p> 
+        <strong><%=comment.author%></strong>-<%= comment.text%> 
+    </p>
+
+<% }) %>
+
+<!-- To include footer.ejs -->
+<%- include ("partials/footer") %>
