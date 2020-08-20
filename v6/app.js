@@ -11,7 +11,7 @@ var mongoose = require("mongoose");
 // var Schema = mongoose.Schema
 var Campground = require("./models/campground");
 var  Comment = require("./models/comment");
-var User = require("./models/comment");
+var User = require("./models/user");
 var  seedDB = require("./seeds");
 
 seedDB();
@@ -27,6 +27,19 @@ mongoose.connect("mongodb://localhost/yelp_camp", {
 app.get("/", function (req, res) {
   res.render("landing");
 });
+
+//PASSPORT CONFIGURATION
+app.use(require("express-session")({
+  secret: "rusty is cute",
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize()); 
+app.use(passport.session());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 //INDEX - show all campgrounds
 // app.get("/campgrounds", function(req, res){
@@ -114,10 +127,17 @@ app.post("/campgrounds/:id/comments", function(req, res){
           res.redirect('/campgrounds/' + campground._id)
         }
       })
-      
     }
   })
 })
+
+//============================================
+//AUTH ROUTES
+//============================================
+//Show register form
+app.get("/register", function(req, res){
+  res.render("register")
+});
 
 
 app.listen(4000, function () {
