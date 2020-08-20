@@ -19,10 +19,6 @@ mongoose.connect("mongodb://localhost/yelp_camp", {
   useUnifiedTopology: true,
 });
 
-app.get("/", function (req, res) {
-  res.render("landing");
-});
-
 //PASSPORT CONFIGURATION
 app.use(
   session({
@@ -38,18 +34,23 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//INDEX - show all campgrounds
-// app.get("/campgrounds", function(req, res){
-//     res.render("campgrounds",{campgrounds:campgrounds});
-// });
+app.use(function(req, res, next){
+  res.locals.currentUser = req.user;
+  next();
+});
 
-app.get("/campgrounds", function (req, res) {
+//INDEX - show all campgrounds
+app.get("/", function (req, res) {
+  res.render("landing");
+});
+
+app.get("/campgrounds", function (req, res) {  
   //get all campground from DB
   Campground.find({}, function (err, allCampgrounds) {
     if (err) {
       console.log(err);
     } else {
-      res.render("campgrounds/index", { campgrounds: allCampgrounds });
+      res.render("campgrounds/index", { campgrounds:allCampgrounds});
     }
   });
 });
@@ -95,7 +96,7 @@ app.get("/campgrounds/:id", function (req, res) {
 //COMMENTS ROUTE
 //======================
 
-app.get("/campgrounds/:id/comments/new", function (req, res) {
+app.get("/campgrounds/:id/comments/new", isLoggedIn, function (req, res) {
   //find campground by id
   Campground.findById(req.params.id, function (err, campground) {
     if (err) {
@@ -106,7 +107,7 @@ app.get("/campgrounds/:id/comments/new", function (req, res) {
   });
 });
 
-app.post("/campgrounds/:id/comments", function (req, res) {
+app.post("/campgrounds/:id/comments", isLoggedIn, function (req, res) {
   //Lookup campround using ID
   Campground.findById(req.params.id, function (err, campground) {
     if (err) {
@@ -162,6 +163,19 @@ app.post(
   }),
   function (req, res) {}
 );
+
+//LogOut route
+app.get("/logout", function(req, res){
+  req.logout();
+  res.redirect("/campgrounds");
+});
+
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect("/login");
+}
 
 app.listen(4000, function () {
   console.log("Yelp camp server");

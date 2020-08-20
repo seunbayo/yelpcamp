@@ -1,12 +1,14 @@
+<!-- To include header.ejs -->
+<%- include ("partials/header") %>
+
 <h1>Login</h1>
 
 <form action="/login" method="post">
+  <input type="text" name="username" placeholder="username" />
 
-    <input type="text" name="username" placeholder="username">
+  <input type="password" name="password" placeholder="password" />
 
-    <input type="password" name="password" placeholder="password">
-
-    
-
-    <input type="submit" value="Login">
+  <input type="submit" value="Login" />
 </form>
+
+<%- include ("partials/footer") %>
