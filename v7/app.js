@@ -5,6 +5,7 @@ var passport = require("passport"),
   User = require("./models/user"),
   session = require("express-session"),
   LocalStrategy = require("passport-local").Strategy,
+  methodOverride = require("method-override"),
   mongoose = require("mongoose"),
   Campground = require("./models/campground"),
   Comment = require("./models/comment"),
@@ -14,6 +15,7 @@ seedDB();
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+app.use(methodOverride("_method"));
 
 mongoose.connect("mongodb://localhost/yelp_camp", {
   useNewUrlParser: true,
@@ -92,6 +94,35 @@ app.get("/campgrounds/:id", function (req, res) {
       }
     });
 });
+
+//==================================
+//EDIT CAMPGROUND ROUTE
+
+app.get("/campgrounds/:id/edit", function(req, res){
+  Campground.findById(req.params.id, function(err, foundCampground){
+    if(err){
+      res.redirect("/campgrounds")
+    }else {
+      res.render("campgrounds/edit", {campground: foundCampground})
+    }
+  });
+});
+
+//UPDATE CAMPGROUND ROUTE
+app.put("/campgrounds/:id", function(req, res){
+  //find and update the correct campground
+  Campground.findOneAndUpdate(req.params.id, req.body.campground, function(err, updatedCAmpground){
+    if(err){
+      res.redirect("/campgrounds");
+    }else{
+      res.redirect("/campgrounds/" + req.params.id);
+    }
+  });
+});
+
+
+
+ 
 
 //======================
 //COMMENTS ROUTE
