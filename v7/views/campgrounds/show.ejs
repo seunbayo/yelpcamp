@@ -21,7 +21,7 @@
           <p>
             <em> Submitted By<%= campground.author.username %> </em>
           </p>
-
+          <% if (currentUser && campground.author.id && campground.author.id.equals(currentUser._id)){ %>
           <a
             class="btn btn-warning"
             href="/campgrounds/<%= campground._id %>/edit"
@@ -34,6 +34,8 @@
           >
             <button class="btn btn-danger">Delete</button>
           </form>
+
+          <% } %>
         </div>
       </div>
       <div class="card" style="background-color: grey; margin-top: 30px">

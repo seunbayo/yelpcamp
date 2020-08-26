@@ -68,10 +68,10 @@ var middleware = require("../middleware/index.js");
       res.render("campgrounds/edit", { campground: foundCampground });
     });
   });
-  
   //UPDATE CAMPGROUND ROUTE
   router.put("/:id", function (req, res) {
     //find and update the correct campground
+    console.log(req.params);
     Campground.findOneAndUpdate(req.params.id, req.body.campground, function (
       err,
       updatedCAmpground
