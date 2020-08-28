@@ -1,15 +1,16 @@
 
 var mongoose = require("mongoose");
+var passportLocalMongoose = require("passport-local-mongoose");
 
 //SCHEMA
-var campgroundSchema = new mongoose.Schema({
+var CampgroundSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "Comment"
         }, 
         username: String
     },
@@ -21,5 +22,5 @@ var campgroundSchema = new mongoose.Schema({
     ]
 });
 
-module.exports = mongoose.model("Campground", campgroundSchema);
+module.exports = mongoose.model("Campground", CampgroundSchema);
 

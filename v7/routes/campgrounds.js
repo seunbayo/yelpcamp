@@ -71,8 +71,8 @@ var middleware = require("../middleware/index.js");
   //UPDATE CAMPGROUND ROUTE
   router.put("/:id", function (req, res) {
     //find and update the correct campground
-    console.log(req.params);
-    Campground.findOneAndUpdate(req.params.id, req.body.campground, function (
+    console.log(req.params, req.body);
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function (
       err,
       updatedCAmpground
     ) {
@@ -87,7 +87,7 @@ var middleware = require("../middleware/index.js");
   //===============================
   //DESTROY CAMPGROUND ROUTE
   router.delete("/:id", middleware.isLoggedIn, function (req, res) {
-    Campground.findOneAndDelete(req.params.id, function (err) {
+    Campground.findByIdAndDelete(req.params.id, function (err) {
       if (err) {
         res.redirect("/campgrounds");
       } else {
