@@ -12,11 +12,16 @@ router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function (
   res
 ) {
   //find campground by id
-  Campground.findById(req.params.id, function (err, campground) {
+  console.log('cmpground id', req.params.id);
+
+  Campground.findById(req.params.id).exec(function(err, foundCampground) {
     if (err) {
       console.log("err");
     } else {
-      res.render("comments/new", { campground: campground });
+      
+      console.log("looking for what campground is", foundCampground);
+      
+      res.render("comments/new", { campground: foundCampground });
     }
   });
 });
