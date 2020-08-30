@@ -56,27 +56,5 @@ router.get("/register", function (req, res) {
     res.redirect("/login");
   }
   
-  /* function checkCampgroundOwnership(req, res, next) {
-    if (req.isAuthenticated()) {
-      Campground.findById(req.params.id, function (err, foundCampground) {
-        if (err) {
-          res.redirect("back");
-        } else {
-          //does the user own the campground?
-          console.log(foundCampground.author.id)
-          console.log(req.user.id);
-          
-          if (foundCampground.author.id(req.user._id)) {
-            next();
-          } else {
-            res.redirect("back");
-          }
-        }
-      });
-    } else {
-      res.redirect("back");
-    }
-  } */
-
 
   module.exports = router;

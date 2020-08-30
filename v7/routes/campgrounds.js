@@ -97,32 +97,5 @@ var Comment = require("../models/comment")
     });
   });
 
-  //middleware
-
- /*  function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    res.redirect("/login");
-  }
-  function checkCampgroundOwnership(req, res, next) {
-    if (req.isAuthenticated()) {
-      Campground.findById(req.params.id, function (err, foundCampground) {
-        if (err) {
-          res.redirect("back");
-        } else {
-          //does the user own the campground?
-          if (foundCampground.author.id(req.user._id)) {
-            next();
-            //otherwise if they dont own it
-          } else {
-            res.redirect("back");
-          }
-        }
-      });
-    } else {
-      res.redirect("back");
-    }
-  }
- */
+  
   module.exports = router;
