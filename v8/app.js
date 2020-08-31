@@ -53,6 +53,12 @@ app.use("/campgrounds",campgroundRoutes);
 app.use(commentRoutes);
 
 
-app.listen(4000, function () {
-  console.log("Yelp camp server");
+var port = 4000;
+if (process.env.PORT) {
+  port = process.env.PORT;
+}
+
+app.listen(port, function () {
+  console.log("Server is running");
 });
+
