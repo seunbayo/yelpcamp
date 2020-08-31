@@ -1,9 +1,11 @@
-<% include ../partials/header %>
+<!-- To include header.ejs -->
+<%- include ("../partials/header") %>
 <div class="container">
   <div class="row">
-    <h1 style="text-align: center">Edit Comment</h1>
+    
 
     <div style="width: 30%; margin: 50px auto">
+      <h2 style="text-align: center">Edit Comment</h2>
       <form
         action="/campgrounds/<%= campground_id %>/comments/<%= foundComment._id %>?_method=PUT"
         method="POST"
@@ -26,4 +28,5 @@
   </div>
 </div>
 
-<% include ../partials/footer %>
+<!-- To include footer.ejs -->
+<%- include ("../partials/footer") %>

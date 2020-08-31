@@ -12,7 +12,7 @@ router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function (
   res
 ) {
   //find campground by id
-  console.log('cmpground id', req.params.id);
+  console.log('campground id', req.params.id);
 
   Campground.findById(req.params.id).exec(function(err, foundCampground) {
     if (err) {
