@@ -33,7 +33,8 @@ router.get("/register", function (req, res) {
   router.get("/login", function (req, res) {
     res.render("login");
   });
-  //Login logic
+
+  //Handling Login logic
   router.post(
     "/login",
     passport.authenticate("local", {
