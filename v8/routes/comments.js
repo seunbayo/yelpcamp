@@ -26,6 +26,8 @@ router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function (
   });
 });
 
+
+//Comments Create
 router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function (
   req,
   res
@@ -33,7 +35,7 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function (
   //Lookup campround using ID
   Campground.findById(req.params.id, function (err, campground) {
     if (err) {
-      console.log(err);
+      req.flash("error", "something went wrong");
       res.redirect("/campgrounds");
     } else {
       //CREATE NEW COMMENT
@@ -48,6 +50,7 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function (
           comment.save();
           campground.comments.push(comment);
           campground.save();
+          req.flash("sucess", "successfully created comment");
           //REDIRECT TO SHOW PAGE
           res.redirect("/campgrounds/" + campground._id);
         }
