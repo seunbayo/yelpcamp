@@ -14,3 +14,7 @@
     display: inline;
 }
 
+.card .row {
+    margin-left: 0;
+    margin-right: 0px;
+}
