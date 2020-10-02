@@ -4,7 +4,11 @@ var passportLocalMongoose = require("passport-local-mongoose");
 
 //SCHEMA
 var CampgroundSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: [true, "Name must be added"],
+        min: 8
+    },
     price: String,
     image: String,
     description: String,

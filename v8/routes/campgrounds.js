@@ -34,19 +34,22 @@ var Comment = require("../models/comment")
     //create a new campground and save to DB
     Campground.create(newCampground, function (err, newlyCreated) {
       if (err) {
-        console.log(err);
+        console.log("ERROR", err);
+        console.log("CAMP", newlyCreated);
+        res.render("campgrounds/new", {campground: newCampground, errors: err.errors});
       } else {
         //redirect back to campground page
         res.redirect("/campgrounds");
       }
     });
   });
-  
+
   //NEW - show form to create a new campground
   router.get("/new", middleware.isLoggedIn, function (req, res) {
-    res.render("campgrounds/new");
+
+    res.render("campgrounds/new", {campground:{}, errors:{}});
   });
-  
+
   //SHow - show more info about one campground
   router.get("/:id", function (req, res) {
     //find the campground with the provided ID
@@ -54,7 +57,8 @@ var Comment = require("../models/comment")
       .populate("comments")
       .exec(function (err, foundCampground) {
         if (err) {
-          console.log(err);
+          console.log(err, foundCampground);
+
         } else {
           //render show template with that campground
           res.render("campgrounds/show", { campground: foundCampground });
