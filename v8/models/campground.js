@@ -7,10 +7,18 @@ var CampgroundSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name must be added"],
+        unique: true,
         min: 8
     },
-    price: String,
-    image: String,
+    price: {
+        type: String,
+        required: [true, "Please add a price"],
+        unique: true,
+    },
+    image: {
+        type: String,
+        required: [true, "please include image link"]
+    },
     description: String,
     author: {
         id: {

@@ -5,6 +5,8 @@
 
 <form action="/register" method="post">
   <input type="text" name="username" placeholder="username" />
+  <% if (errors && errors.name) { %><%= errors.name.message %><% } %>
+
   <input type="password" name="password" placeholder="password" />
   <button>Signup</button>
 </form>

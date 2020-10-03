@@ -19,8 +19,10 @@ router.post("/register", function (req, res) {
   User.register(newUser, req.body.password, function (err, user) {
     if (err) {
       req.flash("error", err.message);
+      console.log("ERROR", err);
+      console.log("USER", newUser);
+      res.render("register", {register: newUser, errors: err.errors});
 
-      return res.render("register");
     }
     passport.authenticate("local")(req, res, function () {
       req.flash("success", "Welcome to CampHouse");
