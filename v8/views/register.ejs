@@ -4,8 +4,11 @@
 <h1>Sign Up</h1>
 
 <form action="/register" method="post">
-  <input type="text" name="username" placeholder="username" />
-  <% if (errors && errors.name) { %><%= errors.name.message %><% } %>
+  <input type="text" name="username" placeholder="username" name="username" />
+
+  <% if (errors.username) { %>
+  <p><%= errors.username.message %></p>
+  <% } %>
 
   <input type="password" name="password" placeholder="password" />
   <button>Signup</button>
