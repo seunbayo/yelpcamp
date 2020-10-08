@@ -6,15 +6,15 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "please add a username"],
     unique: true,
-    min: 5
+    min: 5,
   },
   email: {
-      type: String,
-      lowercase: true,
-      required: [true, "Email is required"],
-      minlength: [10, "Email can't be shorter than 10 characters"],
-      maxlength: [50, "Email can't be longer than 50 characters"],
-  }
+    type: String,
+    lowercase: true,
+    required: [true, "Email is required"],
+    minlength: [10, "Email can't be shorter than 10 characters"],
+    maxlength: [50, "Email can't be longer than 50 characters"],
+  },
 });
 
 UserSchema.plugin(passportLocalMongoose);

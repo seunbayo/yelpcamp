@@ -10,8 +10,8 @@ router.get("/", function (req, res) {
 
 //Show register form
 router.get("/register", function (req, res) {
-    res.render("register", {user: new User(), errors: {} });
-  })
+  res.render("register", { user: new User(), errors: {} });
+});
 
 //Handle signup Logic
 router.post("/register", function (req, res) {
@@ -19,12 +19,13 @@ router.post("/register", function (req, res) {
   User.register(newUser, req.body.password, function (err, newUser) {
     if (err) {
       let errors = err.errors || {};
-      if (err.name === "UserExistsError"){
-        errors.username = {message: "This username is already registered" };
+      // res.render("/register",  {errors: err.errors});
+      if (err.name === "UserExistsError") {
+        errors.username = { message: "This username is already registered" };
       }
-      return res.render("register", {user: newUser, errors});
+      return res.render("register", { user: newUser, errors: err.errors });
     }
-    
+
     passport.authenticate("local")(req, res, function () {
       req.flash("success", "Welcome to CampHouse");
 

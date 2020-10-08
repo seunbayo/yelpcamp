@@ -3,14 +3,13 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var passport = require("passport"),
-LocalStrategy = require('passport-local').Strategy;
+  LocalStrategy = require("passport-local").Strategy;
 var User = require("./models/user");
 var seedDB = require("./seeds");
 var methodOverride = require("method-override");
 var flash = require("connect-flash");
 
-
-  //requiring routes
+//requiring routes
 var commentRoutes = require("./routes/comments");
 var campgroundRoutes = require("./routes/campgrounds");
 var authRoutes = require("./routes/index");
@@ -28,7 +27,8 @@ app.set("view engine", "ejs");
 // seedDB(); //seed the database
 
 //PASSPORT CONFIGURATION
-app.use(require("express-session")({
+app.use(
+  require("express-session")({
     secret: "rusty is cute",
     resave: false,
     saveUninitialized: false,
@@ -49,9 +49,8 @@ app.use(function (req, res, next) {
 });
 
 app.use(authRoutes);
-app.use("/campgrounds",campgroundRoutes);
+app.use("/campgrounds", campgroundRoutes);
 app.use(commentRoutes);
-
 
 var port = 4000;
 if (process.env.PORT) {
@@ -61,4 +60,3 @@ if (process.env.PORT) {
 app.listen(port, function () {
   console.log("Server is running");
 });
-
