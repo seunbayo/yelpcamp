@@ -20,10 +20,16 @@ router.post("/register", function (req, res) {
     if (err) {
       let errors = err.errors || {};
       // res.render("/register",  {errors: err.errors});
-      if (err.name === "UserExistsError") {
+      if (err.name === "MissingUsernameError") {
+        errors.username = { message: "please input a username"}
+      }else if (err.name === "UserExistsError") {
         errors.username = { message: "This username is already registered" };
+      }else if (err.name === "MissingPasswordError"){
+        errors.password = { message: "Please insert a password"};
       }
-      return res.render("register", { user: newUser, errors: err.errors });
+      console.log("errors", errors, JSON.stringify(err));
+
+      return res.render("register", { user: newUser, errors: errors });
     }
 
     passport.authenticate("local")(req, res, function () {
